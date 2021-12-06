@@ -22,7 +22,7 @@ song = AudioSegment.from_('audio/myaudio (1).aac')
 print(song)
 """
 target_path = './audio'
-target_file = '상단소음_상단먼저침.aac'
+target_file = '하단소음_하단먼저침.aac'
 save_path = './result/'
 
 stereo_audio = AudioSegment.from_file(
@@ -44,8 +44,8 @@ print(len(mono_audios[0]))
 print("----------------------------")
 
 if len(mono_audios[0]) > 10000:
-    mono_audios_left = mono_audios[0][-10000:]
-    mono_audios_right = mono_audios[1][-10000:]
+    mono_audios_left = mono_audios[0][-3500:-400]
+    mono_audios_right = mono_audios[1][-3500:-400]
 else:
     mono_audios_left = mono_audios[0]
     mono_audios_right = mono_audios[1]
