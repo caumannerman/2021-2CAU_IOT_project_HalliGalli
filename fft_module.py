@@ -4,7 +4,9 @@ from scipy.io import wavfile
 from scipy import signal
 import os
 
-wav = "./audio/mono_left.wav"
+
+wav = "./result/상단소음_상단먼저침mono_left.wav"
+
 #경로 부분과 파일 이름 부분 잘라주는 것  그 뿐
 (file_dir, file_id) = os.path.split(wav)
 
@@ -41,7 +43,7 @@ plt.show()
 
 
 
-b = signal.firwin(101, cutoff=(100,5000), fs=sample_rate, pass_zero='bandstop')
+b = signal.firwin(101, cutoff=(8000,16500), fs=sample_rate, pass_zero='bandpass')
 data1 = signal.lfilter(b,[1,0],data)
 
 fft = np.fft.fft(data1)
@@ -66,3 +68,9 @@ plt.xlabel("Time")
 plt.title("Amplitude - Time")
 plt.show()
 
+data1 = list(data1)
+data2 = sorted(data1)
+print(data2[-2])
+print(len(data1))
+
+print(data1.index(max(data1)) / sample_rate)
