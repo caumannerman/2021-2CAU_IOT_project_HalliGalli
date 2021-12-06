@@ -69,8 +69,8 @@ plt.title("Amplitude - Time")
 plt.show()
 
 data1 = list(data1)
-data2 = sorted(data1)
-print(data2[-2])
+
+
 print(len(data1))
 
 print(data1.index(max(data1)) / sample_rate)
