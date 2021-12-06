@@ -9,6 +9,8 @@ import android.media.MediaRecorder;
 import android.os.Bundle;
 import android.os.Environment;
 import android.view.View;
+import android.widget.Button;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -128,6 +130,51 @@ public class MainActivity extends AppCompatActivity {
         mediaPlayer.setDataSource(audioFilePath);
         mediaPlayer.prepare();
         mediaPlayer.start();
+    }
+
+    public void ondeck1Click(View view){
+        TextView turn = findViewById(R.id.Turn);
+        turn.setText("Player 2 Turn");
+        TextView open1 = findViewById(R.id.openCardNum1);
+        TextView deck1 = findViewById(R.id.deckNum1);
+        int num1 = Integer.parseInt(open1.getText().toString());
+        int deck = Integer.parseInt(deck1.getText().toString());
+        deck1.setText("" + (deck - 1));
+        open1.setText("" + (num1 + 1));
+    }
+
+    public void ondeck2Click(View view){
+        TextView turn = findViewById(R.id.Turn);
+        turn.setText("Player 1 Turn");
+        TextView open2 = findViewById(R.id.openCardNum2);
+        TextView deck2 = findViewById(R.id.deckNum2);
+        int num2 = Integer.parseInt(open2.getText().toString());
+        int deck = Integer.parseInt(deck2.getText().toString());
+        deck2.setText("" + (deck - 1));
+        open2.setText("" + (num2 + 1));
+    }
+
+    public void onPlayer1WinClick(View view){
+        TextView open1 = findViewById(R.id.openCardNum1);
+        TextView open2 = findViewById(R.id.openCardNum2);
+        TextView deck1 = findViewById(R.id.deckNum1);
+        int num1 = Integer.parseInt(open1.getText().toString());
+        int num2 = Integer.parseInt(open2.getText().toString());
+        int deck = Integer.parseInt(deck1.getText().toString());
+        deck1.setText("" + (num1 + num2 + deck));
+        open1.setText("0");
+        open2.setText("0");
+    }
+    public void onPlayer2WinClick(View view){
+        TextView open1 = findViewById(R.id.openCardNum1);
+        TextView open2 = findViewById(R.id.openCardNum2);
+        TextView deck2 = findViewById(R.id.deckNum2);
+        int num1 = Integer.parseInt(open1.getText().toString());
+        int num2 = Integer.parseInt(open2.getText().toString());
+        int deck = Integer.parseInt(deck2.getText().toString());
+        deck2.setText("" + (num1 + num2 + deck));
+        open1.setText("0");
+        open2.setText("0");
     }
 
     protected void requestPermission(String permissionType, int requestCode){
