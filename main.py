@@ -20,7 +20,7 @@ song = AudioSegment.from_('audio/myaudio (1).aac')
 print(song)
 """
 stereo_audio = AudioSegment.from_file(
-    './audio/myaudio (10).aac',
+    './audio/상단소음_상단먼저침.aac',
     format="aac")
 
 # Calling the split_to_mono method
@@ -55,6 +55,10 @@ plt.xlabel('time')
 plt.ylabel('amplitude')
 plt.show()
 
+D = librosa.stft(data1)
+magnitude, phase = librosa.magphase(D)
+
+
 data1, samplerate1 = librosa.load('./audio/mono_right.wav')
 print(data1.shape, samplerate1)
 times1 = np.arange(len(data1))/float(samplerate1)
@@ -64,3 +68,6 @@ plt.xlim(times1[0], times1[-1])
 plt.xlabel('time')
 plt.ylabel('amplitude')
 plt.show()
+
+
+
