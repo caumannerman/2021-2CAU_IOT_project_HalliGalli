@@ -18,7 +18,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.974"
-        app:srcCompat="@drawable/card_back" />
+        app:srcCompat="@drawable/card3" />
 
     <ImageButton
         android:id="@+id/stopRecord"
@@ -43,7 +43,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.135"
-        app:srcCompat="@drawable/card1" />
+        app:srcCompat="@drawable/card3" />
 
     <ImageView
         android:id="@+id/openCard2"
@@ -55,7 +55,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.854"
-        app:srcCompat="@drawable/card2" />
+        app:srcCompat="@drawable/card3" />
 
     <ImageView
         android:id="@+id/deck1"
@@ -68,13 +68,14 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.038"
-        app:srcCompat="@drawable/card_back" />
+        app:srcCompat="@drawable/card3" />
 
     <TextView
         android:id="@+id/deckNum1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="28"
+        android:textColor="#000000"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.111"
@@ -87,6 +88,8 @@
         android:layout_width="103dp"
         android:layout_height="29dp"
         android:text="Your Turn"
+        android:textColor="#000000"
+        android:background="#FFFFFF"
         android:textAppearance="@style/TextAppearance.AppCompat.Large"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -100,6 +103,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="28"
+        android:textColor="#000000"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.886"
@@ -136,6 +140,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="0"
+        android:textColor="#000000"
+        android:background="#FFFFFF"
         android:textSize="25dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -149,6 +155,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="0"
+        android:textColor="#000000"
+        android:background="#FFFFFF"
         android:textSize="25dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -171,6 +179,19 @@
         app:layout_constraintVertical_bias="0.518" />
 
     <Button
+        android:id="@+id/penalty2"
+        android:layout_width="108dp"
+        android:layout_height="37dp"
+        android:onClick="onPenalty2Click"
+        android:text="Penalty2"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.105"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.548" />
+
+    <Button
         android:id="@+id/Player1Win"
         android:layout_width="108dp"
         android:layout_height="37dp"
@@ -182,6 +203,19 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.465" />
+
+    <Button
+        android:id="@+id/penalty1"
+        android:layout_width="108dp"
+        android:layout_height="37dp"
+        android:onClick="onPenalty1Click"
+        android:text="Penalty1"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.105"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.412" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

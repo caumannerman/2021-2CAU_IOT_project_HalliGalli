@@ -2,6 +2,9 @@ plugins {
     id 'com.android.application'
 }
 
+apply plugin: 'com.android.application'
+apply plugin: 'com.chaquo.python'
+
 android {
     compileSdk 31
 
@@ -13,6 +16,23 @@ android {
         versionName "1.0"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        ndk{
+            abiFilters "armeabi-v7a", "arm64-v8a", "x86", "x86_64"
+        }
+
+        python{
+
+            pip{
+                install "librosa"
+                install "matplotlib"
+                install "pydub"
+                install "scipy"
+                install "ffprobe-python"
+                install "ffmpeg-python"
+                install "cffi"
+
+            }
+        }
     }
 
     buildTypes {
@@ -35,6 +55,7 @@ dependencies {
     implementation 'androidx.appcompat:appcompat:1.4.0'
     implementation 'com.google.android.material:material:1.4.0'
     implementation 'androidx.constraintlayout:constraintlayout:2.1.2'
+    implementation 'com.arthenica:mobile-ffmpeg-full:4.2.2'
     testImplementation 'junit:junit:4.+'
     androidTestImplementation 'androidx.test.ext:junit:1.1.3'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.4.0'

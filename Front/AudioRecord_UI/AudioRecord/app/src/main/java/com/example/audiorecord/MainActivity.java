@@ -3,13 +3,16 @@ package com.example.audiorecord;
 import android.Manifest;
 import android.content.DialogInterface;
 import android.content.pm.PackageManager;
+import android.graphics.drawable.Drawable;
 import android.media.AudioFormat;
 import android.media.MediaPlayer;
 import android.media.MediaRecorder;
 import android.os.Bundle;
 import android.os.Environment;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -19,10 +22,15 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
+import com.chaquo.python.PyObject;
+import com.chaquo.python.Python;
+import com.chaquo.python.android.AndroidPlatform;
 import com.example.audiorecord.databinding.ActivityMainBinding;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Random;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -33,6 +41,9 @@ public class MainActivity extends AppCompatActivity {
     private boolean isRecording = false;
     private static final int RECORD_REQUEST_CODE = 101;
     private static final int STORAGE_REQUEST_CODE = 102;
+    public int[] cardlist = new int[5];
+    long recordStart; //종모양
+    long now; //덱 누를떄
 
 
     @Override
@@ -42,6 +53,11 @@ public class MainActivity extends AppCompatActivity {
         View view = binding.getRoot();
         setContentView(view);
         audioSetup();
+        cardlist[0] = R.drawable.card1;
+        cardlist[1] = R.drawable.card2;
+        cardlist[2] = R.drawable.card4;
+        cardlist[3] = R.drawable.card5;
+        cardlist[4] = R.drawable.card6;
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle("Game Start");
         builder.setMessage("게임을 시작하시겠습니까?");
@@ -95,8 +111,9 @@ public class MainActivity extends AppCompatActivity {
         mediaRecorder.start();
     }
 
-    public void stopAudio(View view){
+    public void stopAudio(View view){ //종 버튼 클릭하면 실행되는 함수
         binding.stopRecord.setEnabled(false);
+        int now;
 
 
         if(isRecording){
@@ -108,18 +125,51 @@ public class MainActivity extends AppCompatActivity {
             mediaPlayer.release();
             mediaPlayer = null;
         }
+        Log.e("path", this.getExternalFilesDir(Environment.DIRECTORY_DOWNLOADS).getAbsolutePath());
+        if(!Python.isStarted()){
+            Python.start(new AndroidPlatform(this));
+            Python python = Python.getInstance();
+            PyObject pyObj = python.getModule("Split2Stereo&Filtering");
+            PyObject librosa = python.getModule("librosa");
 
-        AlertDialog.Builder builder2 = new AlertDialog.Builder(this);
-        builder2.setTitle("Game Finished");
-        builder2.setMessage("게임이 끝났습니다.");
-        builder2.setPositiveButton("다시 시작",
-                new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        recordAudio(view);
-                    }
-                });
-        builder2.show();
+            long left = pyObj.get("left").toLong();
+            long right = pyObj.get("right").toLong();
+            if(left < right){
+                AlertDialog.Builder builder2 = new AlertDialog.Builder(this);
+                builder2.setTitle("Game Finished");
+                builder2.setMessage("Player 1 wins");
+                builder2.setPositiveButton("다시 시작",
+                        new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                recordAudio(view);
+                            }
+                        });
+                builder2.show();
+            }
+            else if(right < left){
+                AlertDialog.Builder builder2 = new AlertDialog.Builder(this);
+                builder2.setTitle("Game Finished");
+                builder2.setMessage("Player 2 wins");
+                builder2.setPositiveButton("다시 시작",
+                        new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                recordAudio(view);
+                            }
+                        });
+                builder2.show();
+            }
+            else{
+
+            }
+
+
+
+        }
+
+
+
     }
 
     public void playAudio(View view) throws IOException {
@@ -141,6 +191,10 @@ public class MainActivity extends AppCompatActivity {
         int deck = Integer.parseInt(deck1.getText().toString());
         deck1.setText("" + (deck - 1));
         open1.setText("" + (num1 + 1));
+        ImageView img = findViewById(R.id.openCard1);
+        Random random = new Random();
+        Drawable drawable = getResources().getDrawable(cardlist[random.nextInt(5)]);
+        img.setImageDrawable(drawable);
     }
 
     public void ondeck2Click(View view){
@@ -152,6 +206,10 @@ public class MainActivity extends AppCompatActivity {
         int deck = Integer.parseInt(deck2.getText().toString());
         deck2.setText("" + (deck - 1));
         open2.setText("" + (num2 + 1));
+        ImageView img = findViewById(R.id.openCard2);
+        Random random = new Random();
+        Drawable drawable = getResources().getDrawable(cardlist[random.nextInt(5)]);
+        img.setImageDrawable(drawable);
     }
 
     public void onPlayer1WinClick(View view){
@@ -164,6 +222,13 @@ public class MainActivity extends AppCompatActivity {
         deck1.setText("" + (num1 + num2 + deck));
         open1.setText("0");
         open2.setText("0");
+
+        
+        Drawable drawable = getResources().getDrawable(R.drawable.card3);
+        ImageView o1 = findViewById(R.id.openCard1);
+        ImageView o2 = findViewById(R.id.openCard2);
+        o1.setImageDrawable(drawable);
+        o2.setImageDrawable(drawable);
     }
     public void onPlayer2WinClick(View view){
         TextView open1 = findViewById(R.id.openCardNum1);
@@ -175,6 +240,38 @@ public class MainActivity extends AppCompatActivity {
         deck2.setText("" + (num1 + num2 + deck));
         open1.setText("0");
         open2.setText("0");
+
+        Drawable drawable = getResources().getDrawable(R.drawable.card3);
+        ImageView o1 = findViewById(R.id.openCard1);
+        ImageView o2 = findViewById(R.id.openCard2);
+        o1.setImageDrawable(drawable);
+        o2.setImageDrawable(drawable);
+    }
+
+    public void onPenalty1Click(View view){
+        // decknum1 - 1
+        // decknum2 + 1
+        TextView deck1 = findViewById(R.id.deckNum1);
+        TextView deck2 = findViewById(R.id.deckNum2);
+
+        int num1 = Integer.parseInt(deck1.getText().toString());
+        int num2 = Integer.parseInt(deck2.getText().toString());
+
+        deck1.setText(""+(num1-1));
+        deck2.setText(""+(num2+1));
+
+    }
+    public void onPenalty2Click(View view){
+        // decknum2 - 1
+        // decknum1 + 1
+        TextView deck1 = findViewById(R.id.deckNum1);
+        TextView deck2 = findViewById(R.id.deckNum2);
+
+        int num1 = Integer.parseInt(deck1.getText().toString());
+        int num2 = Integer.parseInt(deck2.getText().toString());
+
+        deck1.setText(""+(num1+1));
+        deck2.setText(""+(num2-1));
     }
 
     protected void requestPermission(String permissionType, int requestCode){
