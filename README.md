@@ -2,7 +2,7 @@
 
 앱 구동영상 : https://www.youtube.com/watch?v=l78M_DlpKc8
 
-음원 분석 실허 영상 : 업로드 예정
+음원 분석 실험 영상 : 업로드 예정
 
 <아키텍처>
 
