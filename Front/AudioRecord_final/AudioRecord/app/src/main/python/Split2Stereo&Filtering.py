@@ -7,6 +7,7 @@ from scipy import signal
 import os
 import sys
 # sys.path.append('C:\Program Files\ffmpeg\ffmpeg-4.4.1-full_build\ffmpeg-4.4.1-full_build\bin\ffmpeg.exe')
+#audio segment를 위해 로컬에 설치
 sys.path.append('C:\\Program Files\\ffmpeg-4.4.1-essentials_build\\bin\\ffmpeg.exe')
 
 def return_max_amplitude_time(wav):
@@ -41,7 +42,6 @@ def pythonRun(s):
     stereo_audio = pydub.AudioSegment.from_file(
         target_path + '/' + target_file,
         format="wav")
-    print("success")
 
 
     # Calling the split_to_mono method
@@ -54,8 +54,8 @@ def pythonRun(s):
     # by split_to_mono method
 
 
-
-    if len(mono_audios[0]) > 10000:
+# 4초 이상인 경우 자름
+    if len(mono_audios[0]) > 4000:
         mono_audios_left = mono_audios[0][-3500:-400]
         mono_audios_right = mono_audios[1][-3500:-400]
     else:
@@ -73,8 +73,7 @@ def pythonRun(s):
         wav_right,
         format="wav")
 
-
-    # 안드로이드와 연결할 때 바꿔야함
+# 나누어진 두 모노 파일에서 각 플레이어가 책상을 Tap한 시간을 return해줌 ( 안드로이드에서 실행 )
     left = return_max_amplitude_time(wav_left)
     right = return_max_amplitude_time(wav_right)
 
