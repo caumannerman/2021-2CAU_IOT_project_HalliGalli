@@ -1,8 +1,11 @@
 # 2021-2CAU_IOT_project_HalliGalli
 
 앱 구동영상 : https://www.youtube.com/watch?v=l78M_DlpKc8
+
 안드로이드 내부 Python 구동 : Chaquopy 오픈소스 사용
-안드로이드 기기 녹음 음원파일 wav로 저장 : 옴레코더 오픈소스 사용
+
+안드로이드 기기 녹음 음원파일 wav로 저장 : 옴레코더(OmRecorder)) 오픈소스 사용
+
 <img width="600" alt="스크린샷 2021-12-18 오전 12 04 52" src="https://user-images.githubusercontent.com/75043852/146564640-0804017c-6c4d-4265-aa53-d075a907e9e4.png">
 
 <개요&동기>
